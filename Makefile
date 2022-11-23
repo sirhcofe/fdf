@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/21 21:30:18 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/23 16:35:38 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,14 @@ UNAME		:=	$(shell uname)
 
 ifeq ($(UNAME), Linux)
 	LIBX = minilibx/minilibx_linux/
+	COMPILE = -L$(LIBX) -lmlx_Linux -L/usr/lib -I$(LIBX) -lXext -lX11 -lm -lz
 endif
 ifeq ($(UNAME), Darwin)
 	LIBX = minilibx/minilibx_macos/
+	COMPILE = -L$(LIBX) -lmlx -framework OpenGL -framework AppKit
 endif
 
 NAME		=	libfdf.a
-FRAMEWORK	=	-framework OpenGL -framework AppKit
 FLAGS		=	-Wall -Werror -Wextra
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
@@ -36,7 +37,7 @@ all:			$(NAME) fdf
 
 $(NAME):		$(OBJS)
 			@make -C $(LIBX) all
-			@make -C libft/ all
+# @make -C libft/ all
 # @gcc $(FLAGS) -I$(LIBX) $(SRC) -o fdf $(FRAMEWORK)
 # @ar rc $(NAME) $(OBJS)
 
@@ -46,16 +47,14 @@ $(OBJS_DIR)%.o:	%.c
 			@gcc $(CFLAGS) -I$(LIBX) -c $< -o $@
 
 fdf:		main.c
-			@gcc $(CFLAGS) main.c -L$(LIBX) -lmlx -Llibft -lft -o fdf $(FRAMEWORK)
+			gcc $(CFLAGS) -fsanitize=address -g3 main.c $(COMPILE) -o fdf
 
 clean:
-			@make -C libft/ clean
 			@rm -rf objects
 			@make -C $(LIBX) clean
 			@echo "Done!"
 
-fclean:			clean
-			@make -C libft/ fclean
+fclean:		clean
 			@rm -rf $(NAME) fdf
 			@echo "Done!"
 

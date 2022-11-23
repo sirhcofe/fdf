@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/21 21:26:55 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/23 16:13:15 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,12 @@ int	main(void)
 	t_data	img;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Outfile");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	mlx_win = mlx_new_window(mlx, 1024, 720, "Outfile");
+	img.img = mlx_new_image(mlx, 1024, 720);
 	img.line_len = 5;
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_len, &img.endian);
-	drawAAline(&img, 0, 1079, 1919, 0);
-	drawAAline(&img, 0, 0, 1919, 1079);
+	drawAAline(&img, 800, 500, 500, 700);
+	// drawAAline(&img, 1, 1, 1919, 1079);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
