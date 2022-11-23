@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/23 16:35:38 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/23 20:20:45 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRC_DIR		=	fdf				\
 				$(LIBX)
 vpath %.c $(SRC_DIR)
 
+INCLUDES	=	-Ilibft -Iincludes
+
 all:			$(NAME) fdf
 
 $(NAME):		$(OBJS)
@@ -47,7 +49,7 @@ $(OBJS_DIR)%.o:	%.c
 			@gcc $(CFLAGS) -I$(LIBX) -c $< -o $@
 
 fdf:		main.c
-			gcc $(CFLAGS) -fsanitize=address -g3 main.c $(COMPILE) -o fdf
+			gcc $(CFLAGS) main.c $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects
