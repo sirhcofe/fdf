@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/24 15:27:16 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/24 15:31:53 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ $(OBJS_DIR)%.o:	%.c
 			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
 fdf:		main.c
-			gcc $(FLAGS) -L. -lfdf main.c $(INCLUDES) $(COMPILE) -o fdf
+			gcc $(FLAGS) main.c -L. -lfdf $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects
