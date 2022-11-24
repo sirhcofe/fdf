@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/23 20:20:45 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/24 15:27:16 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,11 @@ FLAGS		=	-Wall -Werror -Wextra
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
-SRC			=	
+SRC			=	drawaaline.c			\
+				drawaaline_utils.c
 
-SRC_DIR		=	fdf				\
-				includes		\
+SRC_DIR		=	fildefer/draw-aa-line	\
+				includes				\
 				$(LIBX)
 vpath %.c $(SRC_DIR)
 
@@ -39,17 +40,17 @@ all:			$(NAME) fdf
 
 $(NAME):		$(OBJS)
 			@make -C $(LIBX) all
-# @make -C libft/ all
+			@make -C libft/ all
 # @gcc $(FLAGS) -I$(LIBX) $(SRC) -o fdf $(FRAMEWORK)
-# @ar rc $(NAME) $(OBJS)
+			@ar rc $(NAME) $(OBJS)
 
 $(OBJS_DIR)%.o:	%.c
 			@mkdir -p $(OBJS_DIR)
 			@echo "Compiling: $<"
-			@gcc $(CFLAGS) -I$(LIBX) -c $< -o $@
+			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
 fdf:		main.c
-			gcc $(CFLAGS) main.c $(INCLUDES) $(COMPILE) -o fdf
+			gcc $(FLAGS) -L. -lfdf main.c $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects

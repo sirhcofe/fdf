@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/23 19:33:43 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/24 15:20:28 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 
 # include <stdlib.h>
+# include <math.h>
 # include "libft.h"
 
 typedef struct	s_data
@@ -39,5 +40,14 @@ typedef struct	s_color
 	int		g;
 	int		b;
 }				t_color;
+
+// line drawing algo inspired by xiaolin wu's line algo
+void	draw_aa_line(t_data *img, t_coor *coor, float c_start, float c_range);
+void	swap(int *a, int *b);
+float	calculate_gradient(t_coor *coor);
+float	fraction_num(float x);
+int		set_color(float color_start, float tr);
+int		create_trgb(int t, int r, int g, int b);
+
 
 #endif
