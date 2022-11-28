@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/24 15:31:53 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/28 22:10:12 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,12 @@ FLAGS		=	-Wall -Werror -Wextra
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
-SRC			=	drawaaline.c			\
+SRC			=	error_msg.c				\
+				drawaaline.c			\
 				drawaaline_utils.c
 
-SRC_DIR		=	fildefer/draw-aa-line	\
+SRC_DIR		=	fildefer				\
+				fildefer/draw-aa-line	\
 				includes				\
 				$(LIBX)
 vpath %.c $(SRC_DIR)

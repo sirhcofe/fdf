@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/24 15:20:28 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/28 22:09:36 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ typedef struct	s_coor
 
 typedef struct	s_color
 {
-	int		r;
-	int		g;
-	int		b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 }				t_color;
+
+void	error(int condition);
 
 // line drawing algo inspired by xiaolin wu's line algo
 void	draw_aa_line(t_data *img, t_coor *coor, float c_start, float c_range);

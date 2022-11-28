@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/24 15:20:17 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/28 22:10:54 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ void	set_coor_end(t_coor *coordinate, int x1, int y1)
 	coordinate->y1 = y1;
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	int		fd;
 	void	*mlx;
 	void	*mlx_win;
 	t_data	img;
 	t_coor	coordinate;
 
+	if (argc != 2)
+		error(1);
+	if (fd = open(argv[1], O_RDONLY) < 0)
+		error(2);
+	map = initialize_map();
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1900, 980, "Wireframe");
 	img.img = mlx_new_image(mlx, 1900, 980);
