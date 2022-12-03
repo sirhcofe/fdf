@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/28 22:10:12 by chenlee          ###   ########.fr        #
+#    Updated: 2022/11/30 20:56:32 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,12 @@ OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 SRC			=	error_msg.c				\
+				get_next_line.c			\
+				read_map.c				\
 				drawaaline.c			\
 				drawaaline_utils.c
 
 SRC_DIR		=	fildefer				\
-				fildefer/draw-aa-line	\
 				includes				\
 				$(LIBX)
 vpath %.c $(SRC_DIR)
@@ -51,8 +52,8 @@ $(OBJS_DIR)%.o:	%.c
 			@echo "Compiling: $<"
 			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
-fdf:		main.c
-			gcc $(FLAGS) main.c -L. -lfdf $(INCLUDES) $(COMPILE) -o fdf
+fdf:		main.c $(OBJS)
+			gcc $(FLAGS) main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects

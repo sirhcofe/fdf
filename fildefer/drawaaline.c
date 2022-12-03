@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawAAline.c                                       :+:      :+:    :+:   */
+/*   drawaaline.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:39:47 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/28 21:09:54 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:44:41 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	draw_aa_line(t_data *img, t_coor *coor, float c_start, float c_range)
 	x = coor->x0 - 1;
 	while (++x <= coor->x1)
 	{
-		color = set_color(c_start, fraction_num(intersect_y));
+		color = set_color(c_start, abs_fraction_num(intersect_y));
 		if (steep)
 			my_mlx_pixel_put(img, (int)intersect_y, x, color);
 		else
 			my_mlx_pixel_put(img, x, (int)intersect_y, color);
-		color = set_color(c_start, (1 - fraction_num(intersect_y)));
+		color = set_color(c_start, (1 - abs_fraction_num(intersect_y)));
 		if (steep)
 			my_mlx_pixel_put(img, ((int)intersect_y) - 1, x, color);
 		else

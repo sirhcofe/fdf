@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:45:06 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/28 21:01:53 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/11/30 18:00:48 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ int		set_color(float color_start, float tr)
 	color.r = 0;
 	color.g = 0;
 	color.b = 255;
+	// if (color_start <= 255)
+	// 	color.g += color_start;
+	// else if (color_start <= 510)
+	// {
+	// 	color.b -= 255;
+	// 	color.g += colo_start - 255;
+	// }
+	// else if (color_start <= 765)
+	// {
+		
+	// }
 	i = -1;
 	while (++i < color_start * 1020)
 	{
@@ -41,12 +52,11 @@ int		set_color(float color_start, float tr)
 			round(color.b * tr)));
 }
 
-float	fraction_num(float x)
+float	abs_fraction_num(float x)
 {
-	if (x > 0)
-		return (x - (int)x);
-	else
-		return (x - (((int)x) + 1));
+	if (x < 0)
+		x *= -1;
+	return (x - (int)x);
 }
 
 float	calculate_gradient(t_coor *coor)
