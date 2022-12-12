@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:45:06 by chenlee           #+#    #+#             */
-/*   Updated: 2022/11/30 18:00:48 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/12/11 20:54:47 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-int		set_color(float color_start, float tr)
+int		set_color(double color_start, double tr)
 {
 	int		i;
 	t_color	color;
@@ -52,21 +52,21 @@ int		set_color(float color_start, float tr)
 			round(color.b * tr)));
 }
 
-float	abs_fraction_num(float x)
+double	abs_fraction_num(double x)
 {
 	if (x < 0)
 		x *= -1;
 	return (x - (int)x);
 }
 
-float	calculate_gradient(t_coor *coor)
+double	calculate_gradient(t_screen *screen)
 {
-	float	dy;
-	float	dx;
-	float	gradient;
+	double	dy;
+	double	dx;
+	double	gradient;
 
-	dy = coor->y1 - coor->y0;
-	dx = coor->x1 - coor->x0;
+	dy = screen->y1 - screen->y0;
+	dx = screen->x1 - screen->x0;
 	if (dx == 0.0)
 		gradient = 1;
 	else
@@ -74,11 +74,11 @@ float	calculate_gradient(t_coor *coor)
 	return (gradient);
 }
 
-void	swap(int *a, int *b)
+void	swap(int a, int b)
 {
 	int	temp;
 
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	temp = a;
+	a = b;
+	b = temp;
 }

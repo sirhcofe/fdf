@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/11/30 20:56:32 by chenlee          ###   ########.fr        #
+#    Updated: 2022/12/11 20:16:15 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,18 +21,26 @@ ifeq ($(UNAME), Darwin)
 	COMPILE = -L$(LIBX) -lmlx -framework OpenGL -framework AppKit
 endif
 
+$(shell xdpyinfo | awk '/dimensions/ {print $$2}' > resolution)
+
 NAME		=	libfdf.a
-FLAGS		=	-Wall -Werror -Wextra
+FLAGS		=	-Wall -Wextra -Werror
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 SRC			=	error_msg.c				\
+				ft_free.c				\
 				get_next_line.c			\
 				read_map.c				\
+				read_map_utils.c		\
+				isometric.c				\
+				draw.c					\
 				drawaaline.c			\
 				drawaaline_utils.c
 
 SRC_DIR		=	fildefer				\
+				fildefer/draw_line		\
+				fildefer/projections	\
 				includes				\
 				$(LIBX)
 vpath %.c $(SRC_DIR)
@@ -53,7 +61,7 @@ $(OBJS_DIR)%.o:	%.c
 			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
 fdf:		main.c $(OBJS)
-			gcc $(FLAGS) main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
+			gcc $(FLAGS) -fsanitize=address -g3 main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects

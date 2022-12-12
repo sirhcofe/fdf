@@ -6,36 +6,115 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2022/12/02 18:16:02 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/12/12 17:24:24 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-void	print_map(t_map *map)
+/**
+ * Function gets value of peak (highest) and trough (lowest) of the parameters.
+ * These values can be useful to determine the color coordinate when drawing the
+ * map
+ * 
+ * @param map struct containing information of homogeneous coordinate vectors
+ * along with the peak and trough of the map
+ */
+void	get_peak_trough(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < map->row)
+	{
+		map->peak = map->map[0][0].z;
+		map->trough = map->map[0][0].z;
+		j = -1;
+		while (++j < map->col)
+		{
+			// printf("peak=%f && trough=%f\n", map->peak, map->trough);
+			// printf("z=%f\n", map->map[i][j].z);
+			if (map->map[i][j].z > map->peak)
+				map->peak = map->map[i][j].z;
+			if (map->map[i][j].z < map->trough)
+				map->trough = map->map[i][j].z;
+		}
+	}
+}
+
+void	print_cooorrr(t_map *map, int row, int col)
 {
 	int	i;
 
-	i = 0;
-	while ()
+	i = -1;
+	while (++i < col)
+		printf("z of row[%d] = %f\n", row, map->map[row][i].z);
 }
 
-// void	get_peak_trough(t_map *map, char **array)
-// {
-// 	int	i;
-// 	int	j;
+void	print_coor(t_map *map, int row, int col)
+{
+	int	i;
+	int	j;
 
-// 	i = -1;
-// 	while (array[++i] != NULL)
-// 	{
-// 		j = -1;
-// 		while (array[i][++j] != NULL)
-// 		{
-// 			if (ft_atoi(array[i][j]) )
-// 		}
-// 	}
-// }
+	i = -1;
+	while (++i < row)
+	{
+		j = -1;
+		while (++j < col)
+			printf("coord[%d][%d] = %f\n", i, j, map->map[i][j].z);
+		printf("\n");
+	}
+}
+
+/**
+ * Function parse information in map config file into struct
+ * 
+ * @param map struct containing information of homogeneous coordinate vectors
+ * along with the peak and trough of the map
+ * @param array double char array storing information from map config file used
+ * for int-conversion into map struct
+ * @param column the column length of the map from config
+ * @param row the row length of the map from config
+ */
+void	parse_file_to_struct(t_map *map, char **array, int column, int row)
+{
+	int		i;
+	int		j;
+	char	**line;
+
+	printf("row=%d && col=%d\n", row, column);
+	map->map = (t_coor **) malloc(sizeof(t_coor **) * row);
+	i = -1;
+	while (++i < row)
+	{
+		line = ft_split(array[i], ' ');
+		map->map[i] = (t_coor *) malloc(sizeof(t_coor *) * column);
+		
+		j = -1;
+		while (++j < column)
+		{
+			map->mapc[i][j].x = 0.0;
+			map->map[i][j].y = 0.0;
+			map->map[i][j].z = -1.0;
+			map->map[i][j].w = 1.0;
+			// printf("BEFOREE: i=%d && j=%d && z=%f\n\n", i, j, map->map[i][j].z);
+			// map->map[i][j] = malloc(sizeof(t_coor));
+			parse(map, i, j, 8.0);
+			// parse(&(map->map[i][j]), 8.0);
+			printf("AFTERRR: i=%d && j=%d && z=%f\n\n", i, j, map->map[i][j].z);
+		}
+		printf("\n");
+		free_line(line);
+	}
+	// map->row = row;
+	// map->col = column;
+	parse(map, 0, 2, 8.0);
+	print_cooorrr(map, 0, column);
+	printf("\n");
+	print_coor(map, row, column);
+}
 
 /**
  * Function checks for valid input from the map file, where invalid/repetitive
@@ -43,7 +122,7 @@ void	print_map(t_map *map)
  * 
  * @param number The number parsed for checking
  */
-void	check_number(char *number)
+int	check_number(char *number)
 {
 	int	i;
 	int	neg;
@@ -54,77 +133,54 @@ void	check_number(char *number)
 		if (i == 0 && (number[0] == '-' || number[0] == '+'))
 		{
 			if (neg == 1 && !ft_isdigit(number[1]))
-				error(3);
+				return (1);
 			neg++;
 			i++;
 		}
 		if (!ft_isdigit(number[i]))
-			error(3);
+			return (1);
 		i++;
 	}
+	return (0);
 }
 
 /**
  * Function checks for potential errors in the map config file, where checking
  * includes non-digit input, repetitive signs for every number, MAX/MIN int
  * 
+ * @param map struct containing information of homogeneous coordinate vectors
+ * along with the peak and trough of the map
  * @param array map config data
  */
-void	check_array_size(t_map *map, char **array)
+void	check_array_size(t_map *map, char **array, int row_count)
 {
 	int		i;
 	int		j;
 	int		column_count;
-	char	**line
+	char	**line;
 
 	i = -1;
+	column_count = 0;
 	while (array[++i] != NULL)
 	{
 		line = ft_split(array[i], ' ');
 		j = -1;
 		while (line[++j] != NULL)
 		{
-			check_is_number(line[j]);
-			if (ft_long_atoi(line[j] > 2147483647
-				|| ft_long_atoi(line[j]) < -2147483648)
-				error(4);
-			else
-				map[i][j] = ft_atoi(line[j]);
+			if (check_number(line[j]) == 1)
+				error(3, map);
+			if (long_atoi(line[j]) > MAX_INT || long_atoi(line[j]) < MIN_INT)
+				error(4, map);
 		}
-		column_count = j;
+		if (column_count == 0)
+			column_count = j;
+		else
+			if (compare_columns(column_count, j) == 1)
+				error(5, map);
+		free_line(line);
 	}
-}
-
-/**
- * Similar to ft_strjoin, with the addition where function frees the previous
- * string parsed for joining.
- * 
- * @param s1 first string for joining
- * @param s2 second string for joining
- */
-char	*join_str(char *s1, char *s2)
-{
-	char	*ptr;
-	int		s1_len;
-	int		s2_len;
-
-	if (!s1 && !s2)
-		return (0);
-	else if (s1 && !s2)
-		return (ft_strdup(s1));
-	else if (!s1 && s2)
-		return (ft_strdup(s2));
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	ptr = malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!ptr)
-		return (0);
-	ft_memmove (ptr, s1, s1_len);
-	ft_memmove ((ptr + s1_len), s2, s2_len);
-	ptr[s1_len + s2_len] = '\0';
-	free(s1);
-	free(s2);
-	return (ptr);
+	parse_file_to_struct(map, array, column_count, row_count);
+	// print_coor(map->map, map->row, map->col);
 }
 
 /**
@@ -132,8 +188,8 @@ char	*join_str(char *s1, char *s2)
  * then the map config will be extracted to useful information through
  * get_next_line function
  * 
- * @param map struct that will store information of map config, along with
- * the peak/trough value
+ * @param map struct containing information of homogeneous coordinate vectors
+ * along with the peak and trough of the map
  * @param fd file descriptor registered for the opened map config file
  */
 void	read_map(t_map *map, int fd)
@@ -143,7 +199,8 @@ void	read_map(t_map *map, int fd)
 	char	*stored_line;
 	char	**array;
 
-	map = NULL;
+	stored_line = NULL;
+	line_count = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -157,7 +214,8 @@ void	read_map(t_map *map, int fd)
 	}
 	array = ft_split(stored_line, '\n');
 	map->map = ft_calloc(sizeof(int *), line_count);
-	check_array_size(map, array);
-	print_map(map);
-	// get_peak_trough(map, array);
+	check_array_size(map, array, line_count);
+	get_peak_trough(map);
+	free(stored_line);
+	free_line(array);
 }

@@ -12,9 +12,11 @@
 
 #include "fdf.h"
 
-void	error(int condition)
+// 1 - 2 no free
+// 3 - 5 free map*
+void	error(int condition, t_map *map)
 {
-	if (condition >= 1 && condition <= 4)
+	if (condition >= 1 && condition <= 5)
 	{
 		if (condition == 1)
 			ft_putstr_fd("Usage: ./fdf <MAP_FILE>", 2);
@@ -24,6 +26,10 @@ void	error(int condition)
 			ft_putstr_fd("Error: Invalid map input!", 2);
 		else if (condition == 4)
 			ft_putstr_fd("Error: Max/Min Int exceeded!", 2);
+		else if (condition == 5)
+			ft_putstr_fd("Error: Inconsistent map size!", 2);
+		if (condition >= 3 && condition <= 5)
+			ft_free(map);
 		exit(1);
 	}
 }

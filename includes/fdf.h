@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2022/12/02 18:11:24 by chenlee          ###   ########.fr       */
+/*   Updated: 2022/12/12 17:09:00 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,27 @@
 # include "libft.h"
 
 # define BUFFER_SIZE 10
-
-typedef struct	s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_len;
-	int		endian;
-}				t_data;
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
 
 typedef struct	s_coor
 {
-	int		x0;
-	int		x1;
-	int		y0;
-	int		y1;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
 }				t_coor;
+
+typedef struct	s_screen
+{
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+	int	max_x;
+	int	max_y;
+}				t_screen;
+
 
 typedef struct	s_color
 {
@@ -46,23 +50,59 @@ typedef struct	s_color
 
 typedef struct	s_map
 {
-	int				**map;
-	unsigned char	peak;
-	unsigned char	trough;
+	t_coor	**map;
+	int		row;
+	int		col;
+	double	peak;
+	double	trough;
 }				t_map;
 
+typedef struct	s_wframe
+{
+	int		wframe_h;
+	int		wframe_w;
+	int		dot_dist;
+}				t_wframe;
 
-void	error(int condition);
-void	read_map(t_map *map, int fd);
+
+typedef struct	s_fdf
+{
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_len;
+	int			endian;
+	int			width;
+	int			height;
+	t_wframe	wf;
+}				t_fdf;
+
+void	error(int condition, t_map *map);
+void    ft_free(t_map *map);
+
+// read map function
 char	*get_next_line(int fd);
+char	*join_str(char *s1, char *s2);
+void	read_map(t_map *map, int fd);
+void	parse(t_map *map, int i, int j, double z);
+void	free_line(char **line);
+long	long_atoi(const char *str);
+int		compare_columns(int column_count, int j);
+
+// line drawing function
+void	draw(t_fdf *fdf, t_map *map);
 
 // line drawing algo inspired by xiaolin wu's line algo
-void	draw_aa_line(t_data *img, t_coor *coor, float c_start, float c_range);
-void	swap(int *a, int *b);
-float	calculate_gradient(t_coor *coor);
-float	abs_fraction_num(float x);
-int		set_color(float color_start, float tr);
+void	draw_aa_line(t_fdf *fdf, t_screen *screen, double c_start, double c_range);
+void	swap(int a, int b);
+double	calculate_gradient(t_screen *screen);
+double	abs_fraction_num(double x);
+int		set_color(double color_start, double tr);
 int		create_trgb(int t, int r, int g, int b);
 
+// isometric
+void	isometric_view(t_fdf *fdf, t_map *map);
 
 #endif
