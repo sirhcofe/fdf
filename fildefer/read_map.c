@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2022/12/12 17:24:24 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 15:56:49 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,46 +26,28 @@ void	get_peak_trough(t_map *map)
 	int	i;
 	int	j;
 
+	map->peak = map->map[0][0].z;
+	map->trough = map->map[0][0].z;
 	i = -1;
 	while (++i < map->row)
 	{
-		map->peak = map->map[0][0].z;
-		map->trough = map->map[0][0].z;
 		j = -1;
 		while (++j < map->col)
 		{
-			// printf("peak=%f && trough=%f\n", map->peak, map->trough);
-			// printf("z=%f\n", map->map[i][j].z);
 			if (map->map[i][j].z > map->peak)
+			{
 				map->peak = map->map[i][j].z;
+				get_peak_trough_coor(map, i, j, 1);
+			}
 			if (map->map[i][j].z < map->trough)
+			{
 				map->trough = map->map[i][j].z;
+				get_peak_trough_coor(map, i, j, 2);
+			}
 		}
 	}
-}
-
-void	print_cooorrr(t_map *map, int row, int col)
-{
-	int	i;
-
-	i = -1;
-	while (++i < col)
-		printf("z of row[%d] = %f\n", row, map->map[row][i].z);
-}
-
-void	print_coor(t_map *map, int row, int col)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < row)
-	{
-		j = -1;
-		while (++j < col)
-			printf("coord[%d][%d] = %f\n", i, j, map->map[i][j].z);
-		printf("\n");
-	}
+	if (fabs(map->trough) > 0.001)
+		relative_to_zero(map);
 }
 
 /**
@@ -84,36 +66,24 @@ void	parse_file_to_struct(t_map *map, char **array, int column, int row)
 	int		j;
 	char	**line;
 
-	printf("row=%d && col=%d\n", row, column);
-	map->map = (t_coor **) malloc(sizeof(t_coor **) * row);
+	map->map = (t_coor **) malloc(sizeof(t_coor *) * row);
 	i = -1;
 	while (++i < row)
 	{
 		line = ft_split(array[i], ' ');
-		map->map[i] = (t_coor *) malloc(sizeof(t_coor *) * column);
-		
+		map->map[i] = (t_coor *) malloc(sizeof(t_coor ) * column);
 		j = -1;
 		while (++j < column)
 		{
-			map->mapc[i][j].x = 0.0;
+			map->map[i][j].x = 0.0;
 			map->map[i][j].y = 0.0;
-			map->map[i][j].z = -1.0;
+			map->map[i][j].z = (double)ft_atoi(line[j]);
 			map->map[i][j].w = 1.0;
-			// printf("BEFOREE: i=%d && j=%d && z=%f\n\n", i, j, map->map[i][j].z);
-			// map->map[i][j] = malloc(sizeof(t_coor));
-			parse(map, i, j, 8.0);
-			// parse(&(map->map[i][j]), 8.0);
-			printf("AFTERRR: i=%d && j=%d && z=%f\n\n", i, j, map->map[i][j].z);
 		}
-		printf("\n");
 		free_line(line);
 	}
-	// map->row = row;
-	// map->col = column;
-	parse(map, 0, 2, 8.0);
-	print_cooorrr(map, 0, column);
-	printf("\n");
-	print_coor(map, row, column);
+	map->row = row;
+	map->col = column;
 }
 
 /**
@@ -169,7 +139,7 @@ void	check_array_size(t_map *map, char **array, int row_count)
 		{
 			if (check_number(line[j]) == 1)
 				error(3, map);
-			if (long_atoi(line[j]) > MAX_INT || long_atoi(line[j]) < MIN_INT)
+			if (ft_atoi(line[j]) > MAX_INT || ft_atoi(line[j]) < MIN_INT)
 				error(4, map);
 		}
 		if (column_count == 0)
@@ -180,7 +150,6 @@ void	check_array_size(t_map *map, char **array, int row_count)
 		free_line(line);
 	}
 	parse_file_to_struct(map, array, column_count, row_count);
-	// print_coor(map->map, map->row, map->col);
 }
 
 /**

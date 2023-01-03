@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2022/12/12 16:45:57 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 16:00:56 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_map	*map_init(void)
 	map->map = NULL;
 	map->peak = 0;
 	map->trough = 0;
+	map->relative = 0;
+	map->pk_coor[0] = 0;
+	map->pk_coor[1] = 0;
+	map->tr_coor[0] = 0;
+	map->tr_coor[1] = 0;
 	return (map);
 }
 
@@ -62,7 +67,6 @@ int	main(int argc, char **argv)
 	int		fd;
 	t_fdf	*fdf;
 	t_map	*map;
-	// t_data	img;
 
 	if (argc != 2)
 		error(1, NULL);
@@ -72,10 +76,7 @@ int	main(int argc, char **argv)
 	fdf = fdf_init();
 	map = map_init();
 	read_map(map, fd);
-	// isometric_view(fdf, map);
-	// set_coor_start(&coordinate, 1000, 790);
-	// set_coor_end(&coordinate, 1550, 590);
-	// draw_aa_line(&img, &coordinate, 0, 1);
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	isometric_view(fdf, map);
+	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->img, 0, 0);
 	mlx_loop(fdf->mlx);
 }

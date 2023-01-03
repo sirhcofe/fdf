@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2022/12/11 20:16:15 by chenlee          ###   ########.fr        #
+#    Updated: 2022/12/21 18:39:37 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,18 @@ UNAME		:=	$(shell uname)
 ifeq ($(UNAME), Linux)
 	LIBX = minilibx/minilibx_linux/
 	COMPILE = -L$(LIBX) -lmlx_Linux -L/usr/lib -I$(LIBX) -lXext -lX11 -lm -lz
+	PREBUILD = xdpyinfo | awk '/dimensions/ {print $$2}' > resolution
 endif
 ifeq ($(UNAME), Darwin)
 	LIBX = minilibx/minilibx_macos/
 	COMPILE = -L$(LIBX) -lmlx -framework OpenGL -framework AppKit
+	PREBUILD = system_profiler SPDisplaysDataType | awk '/Resolution/ {print $$2, $$3, $$4}' > resolution
 endif
 
-$(shell xdpyinfo | awk '/dimensions/ {print $$2}' > resolution)
+$(shell $(PREBUILD))
 
 NAME		=	libfdf.a
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
@@ -36,7 +38,8 @@ SRC			=	error_msg.c				\
 				isometric.c				\
 				draw.c					\
 				drawaaline.c			\
-				drawaaline_utils.c
+				drawaaline_utils.c		\
+				zzz.c
 
 SRC_DIR		=	fildefer				\
 				fildefer/draw_line		\

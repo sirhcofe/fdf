@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2022/12/12 17:09:00 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 16:31:08 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ typedef struct	s_map
 	t_coor	**map;
 	int		row;
 	int		col;
+	int		pk_coor[2];
+	int		tr_coor[2];
 	double	peak;
 	double	trough;
+	double	relative;
 }				t_map;
 
 typedef struct	s_wframe
 {
-	int		wframe_h;
-	int		wframe_w;
+	double	total_h;
+	double	total_w;
 	int		dot_dist;
+	double	dot_x;
+	double	dot_y;
 }				t_wframe;
 
 
@@ -86,23 +91,25 @@ void    ft_free(t_map *map);
 char	*get_next_line(int fd);
 char	*join_str(char *s1, char *s2);
 void	read_map(t_map *map, int fd);
-void	parse(t_map *map, int i, int j, double z);
 void	free_line(char **line);
-long	long_atoi(const char *str);
 int		compare_columns(int column_count, int j);
+void	relative_to_zero(t_map *map);
+void	get_peak_trough_coor(t_map *map, int i, int j, int condition);
 
 // line drawing function
 void	draw(t_fdf *fdf, t_map *map);
 
 // line drawing algo inspired by xiaolin wu's line algo
-void	draw_aa_line(t_fdf *fdf, t_screen *screen, double c_start, double c_range);
-void	swap(int a, int b);
-double	calculate_gradient(t_screen *screen);
+void	draw_aa_line(t_fdf *fdf, t_screen *screen, double c_strt, double c_ran);
+void	swap(int *a, int *b);
+double	calculate_gradient(t_screen *screen, int condition);
 double	abs_fraction_num(double x);
 int		set_color(double color_start, double tr);
 int		create_trgb(int t, int r, int g, int b);
 
 // isometric
 void	isometric_view(t_fdf *fdf, t_map *map);
+
+void	print_coor(t_map *map);
 
 #endif
