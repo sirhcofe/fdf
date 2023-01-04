@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 23:02:50 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/04 22:41:27 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,30 @@ typedef struct	s_coor
 
 typedef struct	s_screen
 {
-	int	x0;
-	int	y0;
-	int	x1;
-	int	y1;
-	int	max_x;
-	int	max_y;
+	double	x0;
+	double	y0;
+	double	x1;
+	double	y1;
+	double	max_x;
+	double	max_y;
+	double	gradient;
+	double	c_start;
+	double	c_range;
 }				t_screen;
 
+typedef struct	s_xlwu
+{
+	double	xend;
+	double	yend;
+	double	xgap;
+	double	ygap;
+	double	interx;
+	double	intery;
+	int		xpxl1;
+	int		ypxl1;
+	int		xpxl2;
+	int		ypxl2;
+}				t_xlwu;
 
 typedef struct	s_color
 {
@@ -99,12 +115,15 @@ void	relative_to_mean(t_map *map);
 void	draw(t_fdf *fdf, t_map *map);
 
 // line drawing algo inspired by xiaolin wu's line algo
-void	draw_aa_line(t_fdf *fdf, t_screen *screen, double c_strt, double c_ran);
-void	swap(int *a, int *b);
-double	calculate_gradient(t_screen *screen, int condition);
-double	abs_fraction_num(double x);
+void	draw_aa_line(t_fdf *fdf, t_screen *screen);
+void	draw_along_x(t_fdf *fdf, t_screen *screen, t_xlwu *algo);
+void	draw_along_y(t_fdf *fdf, t_screen *screen, t_xlwu *algo);
+void	swap(double *a, double *b);
+int		i_part(double value);
+double	f_part(double value);
+double	rf_part(double value);
 int		set_color(double color_start, double tr);
-int		create_trgb(int t, int r, int g, int b);
+void	put_pxl(t_fdf *fdf, int x, int y, int color);
 
 // isometric
 void	isometric_view(t_fdf *fdf, t_map *map);

@@ -52,6 +52,8 @@ Mkfile.old
 dkms.conf
 
 # Others
+.DS_Store
 fdf
 maps
+test_maps
 resolution

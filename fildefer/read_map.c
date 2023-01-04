@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 12:48:51 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/04 14:48:41 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	check_number(char *number)
 	int	neg;
 
 	i = 0;
+	neg = 0;
 	while (number[i] != 0)
 	{
 		if (i == 0 && (number[0] == '-' || number[0] == '+'))
