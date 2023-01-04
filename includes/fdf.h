@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 16:31:08 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 23:02:50 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ typedef struct	s_map
 	t_coor	**map;
 	int		row;
 	int		col;
-	int		pk_coor[2];
-	int		tr_coor[2];
 	double	peak;
 	double	trough;
 	double	relative;
+	double	ratio;
 }				t_map;
 
 typedef struct	s_wframe
@@ -94,7 +93,7 @@ void	read_map(t_map *map, int fd);
 void	free_line(char **line);
 int		compare_columns(int column_count, int j);
 void	relative_to_zero(t_map *map);
-void	get_peak_trough_coor(t_map *map, int i, int j, int condition);
+void	relative_to_mean(t_map *map);
 
 // line drawing function
 void	draw(t_fdf *fdf, t_map *map);

@@ -6,25 +6,34 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:30:37 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 16:01:52 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 23:15:08 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-void	get_peak_trough_coor(t_map *map, int i, int j, int condition)
+void	relative_to_mean(t_map *map)
 {
-	if (condition == 1)
+	double	total_z;
+	int		coord[2];
+
+	total_z = 0.0;
+	coord[0] = -1;
+	while (++coord[0] < map->row)
 	{
-		map->pk_coor[0] = i;
-		map->pk_coor[1] = j;
+		coord[1] = -1;
+		while (++coord[1] < map->col)
+			total_z += map->map[coord[0]][coord[1]].z;
 	}
-	else if (condition == 2)
+	total_z /= ((map->row * map->col) / 10);
+	if (total_z - map->peak < 0.0001)
 	{
-		map->tr_coor[0] = i;
-		map->tr_coor[1] = j;
+		map->ratio = total_z / map->peak;
+		map->peak = total_z;
 	}
+	else
+		map->ratio = 1.0;
 }
 
 void	relative_to_zero(t_map *map)

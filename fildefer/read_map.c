@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 15:56:49 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/04 12:48:51 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,14 @@ void	get_peak_trough(t_map *map)
 		while (++j < map->col)
 		{
 			if (map->map[i][j].z > map->peak)
-			{
 				map->peak = map->map[i][j].z;
-				get_peak_trough_coor(map, i, j, 1);
-			}
 			if (map->map[i][j].z < map->trough)
-			{
 				map->trough = map->map[i][j].z;
-				get_peak_trough_coor(map, i, j, 2);
-			}
 		}
 	}
 	if (fabs(map->trough) > 0.001)
 		relative_to_zero(map);
+	relative_to_mean(map);
 }
 
 /**
@@ -107,7 +102,9 @@ int	check_number(char *number)
 			neg++;
 			i++;
 		}
-		if (!ft_isdigit(number[i]))
+		if (number[i] == ',' && number[i + 1] == '0' && number[i + 2] == 'x')
+			return (0);
+		else if (!ft_isdigit(number[i]))
 			return (1);
 		i++;
 	}

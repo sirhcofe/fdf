@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:47:21 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 16:30:03 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 23:16:07 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void	draw_vertical(t_fdf *fdf, t_map *map)
 			screen.y0 = map->map[y][x].y;
 			screen.x1 = map->map[y + 1][x].x;
 			screen.y1 = map->map[y + 1][x].y;
-			if (fabs(map->peak - map->trough) < 0.0001)
+			if (fabs(map->peak) < 0.0001)
 				c_start = 0.0;
 			else
-				c_start = (map->map[y][x].z - map->trough) / (map->peak - map->trough);
-			if (fabs(map->peak - map->trough) < 0.0001
+				c_start = (map->map[y][x].z) / (map->peak);
+			if (fabs(map->peak) < 0.0001
 					|| fabs(map->map[y + 1][x].z - map->map[y][x].z) < 0.0001)
 				c_range = 0.0;
 			else
 				c_range = (map->map[y + 1][x].z - map->map[y][x].z)
-							/ (map->peak - map->trough);
+							/ (map->peak);
 			draw_aa_line(fdf, &screen, c_start, c_range);
 		}
 	}	
@@ -64,16 +64,16 @@ void	draw_horizontal(t_fdf *fdf, t_map *map)
 			screen.y0 = map->map[y][x].y;
 			screen.x1 = map->map[y][x + 1].x;
 			screen.y1 = map->map[y][x + 1].y;
-			if (fabs(map->peak - map->trough) < 0.0001)
+			if (fabs(map->peak) < 0.0001)
 				c_start = 0.0;
 			else
-				c_start = (map->map[y][x].z - map->trough) / (map->peak - map->trough);
-			if ((fabs(map->peak - map->trough) < 0.0001)
+				c_start = (map->map[y][x].z) / (map->peak);
+			if ((fabs(map->peak) < 0.0001)
 					|| (fabs(map->map[y][x + 1].z - map->map[y][x].z) < 0.0001))
 				c_range = 0.0;
 			else
 				c_range = ((map->map[y][x + 1].z - map->map[y][x].z)
-								/ (map->peak - map->trough));
+								/ (map->peak));
 			draw_aa_line(fdf, &screen, c_start, c_range);
 		}
 	}

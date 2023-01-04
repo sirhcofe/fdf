@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 16:00:56 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/03 23:01:26 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ t_map	*map_init(void)
 	map->peak = 0;
 	map->trough = 0;
 	map->relative = 0;
-	map->pk_coor[0] = 0;
-	map->pk_coor[1] = 0;
-	map->tr_coor[0] = 0;
-	map->tr_coor[1] = 0;
+	map->ratio = 0.0;
 	return (map);
 }
 
