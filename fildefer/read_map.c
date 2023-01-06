@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 14:48:41 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:33:41 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,6 @@ void	get_peak_trough(t_map *map)
 }
 
 /**
- * Function parse information in map config file into struct
- * 
- * @param map struct containing information of homogeneous coordinate vectors
- * along with the peak and trough of the map
- * @param array double char array storing information from map config file used
- * for int-conversion into map struct
- * @param column the column length of the map from config
- * @param row the row length of the map from config
- */
-void	parse_file_to_struct(t_map *map, char **array, int column, int row)
-{
-	int		i;
-	int		j;
-	char	**line;
-
-	map->map = (t_coor **) malloc(sizeof(t_coor *) * row);
-	i = -1;
-	while (++i < row)
-	{
-		line = ft_split(array[i], ' ');
-		map->map[i] = (t_coor *) malloc(sizeof(t_coor ) * column);
-		j = -1;
-		while (++j < column)
-		{
-			map->map[i][j].x = 0.0;
-			map->map[i][j].y = 0.0;
-			map->map[i][j].z = (double)ft_atoi(line[j]);
-			map->map[i][j].w = 1.0;
-		}
-		free_line(line);
-	}
-	map->row = row;
-	map->col = column;
-}
-
-/**
  * Function checks for valid input from the map file, where invalid/repetitive
  * signs, non-digits will return error
  * 
@@ -92,6 +56,8 @@ int	check_number(char *number)
 	int	i;
 	int	neg;
 
+	if (ft_atoi(number) > MAX_INT || ft_atoi(number) < MIN_INT)
+		return (1);
 	i = 0;
 	neg = 0;
 	while (number[i] != 0)
@@ -112,6 +78,15 @@ int	check_number(char *number)
 	return (0);
 }
 
+int	check_column(int *column_count, int j)
+{
+	if (*(column_count) == 0)
+		*(column_count) = j;
+	else if (compare_columns(*(column_count), j) == 1)
+		return (1);
+	return (0);
+}
+
 /**
  * Function checks for potential errors in the map config file, where checking
  * includes non-digit input, repetitive signs for every number, MAX/MIN int
@@ -120,7 +95,7 @@ int	check_number(char *number)
  * along with the peak and trough of the map
  * @param array map config data
  */
-void	check_array_size(t_map *map, char **array, int row_count)
+int	check_array_size(t_map *map, char **array, int row_count)
 {
 	int		i;
 	int		j;
@@ -136,18 +111,17 @@ void	check_array_size(t_map *map, char **array, int row_count)
 		while (line[++j] != NULL)
 		{
 			if (check_number(line[j]) == 1)
-				error(3, map);
-			if (ft_atoi(line[j]) > MAX_INT || ft_atoi(line[j]) < MIN_INT)
-				error(4, map);
+			{
+				free_line(line, NULL, NULL);
+				return (1);
+			}
 		}
-		if (column_count == 0)
-			column_count = j;
-		else
-			if (compare_columns(column_count, j) == 1)
-				error(5, map);
-		free_line(line);
+		free_line(line, NULL, NULL);
+		if (check_column(&column_count, j) == 1)
+			return (1);
 	}
 	parse_file_to_struct(map, array, column_count, row_count);
+	return (0);
 }
 
 /**
@@ -165,6 +139,7 @@ void	read_map(t_map *map, int fd)
 	char	*line;
 	char	*stored_line;
 	char	**array;
+	int		ret;
 
 	stored_line = NULL;
 	line_count = 0;
@@ -172,17 +147,16 @@ void	read_map(t_map *map, int fd)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		else
-		{
 			stored_line = join_str(stored_line, line);
-			line_count++;
-		}
+		line_count++;
 	}
-	array = ft_split(stored_line, '\n');
 	map->map = ft_calloc(sizeof(int *), line_count);
-	check_array_size(map, array, line_count);
+	array = ft_split(stored_line, '\n');
+	ret = check_array_size(map, array, line_count);
+	free_line(array, stored_line, line);
+	if (ret == 1)
+		error(3, map, NULL);
 	get_peak_trough(map);
-	free(stored_line);
-	free_line(array);
 }

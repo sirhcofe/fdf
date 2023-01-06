@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 22:15:48 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 22:58:21 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/05 14:41:48 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	x_end_points(t_fdf *fdf, t_screen *sc, t_xlwu *algo, int color)
 	algo->xpxl2 = algo->xend;
 	algo->ypxl2 = i_part(algo->yend);
 	color = set_color(sc->c_start + sc->c_range,
-		rf_part(algo->yend) * algo->xgap);
+			rf_part(algo->yend) * algo->xgap);
 	put_pxl(fdf, algo->xpxl2, algo->ypxl2, color);
 	color = set_color(sc->c_start + sc->c_range,
-		f_part(algo->yend) * algo->xgap);
+			f_part(algo->yend) * algo->xgap);
 	put_pxl(fdf, algo->xpxl2, algo->ypxl2 + 1, color);
 }
 
@@ -50,7 +50,8 @@ void	draw_along_x(t_fdf *fdf, t_screen *screen, t_xlwu *algo)
 		screen->c_start += screen->c_range;
 		screen->c_range *= -1;
 	}
-	screen->gradient = (screen->y1 - screen->y0) / (screen->x1 - screen->x0);
+	screen->gradient = (double)(screen->y1 - screen->y0)
+		/ (double)(screen->x1 - screen->x0);
 	x_end_points(fdf, screen, algo, color);
 	x = algo->xpxl1;
 	while (++x < algo->xpxl2)

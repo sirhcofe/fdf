@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2023/01/04 22:18:15 by chenlee          ###   ########.fr        #
+#    Updated: 2023/01/06 14:32:50 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ SRC			=	error_msg.c				\
 				get_next_line.c			\
 				read_map.c				\
 				read_map_utils.c		\
+				parsing.c				\
+				set_controls.c			\
 				isometric.c				\
 				draw.c					\
 				drawaaline.c			\
@@ -57,7 +59,6 @@ all:			$(NAME) fdf
 $(NAME):		$(OBJS)
 			@make -C $(LIBX) all
 			@make -C libft/ all
-# @gcc $(FLAGS) -I$(LIBX) $(SRC) -o fdf $(FRAMEWORK)
 			@ar rc $(NAME) $(OBJS)
 
 $(OBJS_DIR)%.o:	%.c
@@ -66,7 +67,7 @@ $(OBJS_DIR)%.o:	%.c
 			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
 fdf:		main.c $(OBJS)
-			gcc $(FLAGS) -fsanitize=address -g3 main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
+			gcc $(FLAGS) main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects

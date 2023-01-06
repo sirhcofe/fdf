@@ -6,16 +6,16 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:45:06 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 22:41:18 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/05 14:36:49 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-void	swap(double *a, double *b)
+void	swap(int *a, int *b)
 {
-	double	temp;
+	int	temp;
 
 	temp = *a;
 	*a = *b;

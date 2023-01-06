@@ -6,13 +6,11 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 14:59:13 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:31:43 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
 #include "fdf.h"
-#include <stdio.h>
 
 t_map	*map_init(void)
 {
@@ -32,6 +30,7 @@ void	get_resolution(t_fdf *fdf)
 	char	*resolution;
 	char	**width_height;
 	int		fd;
+	int		status;
 
 	fd = open("resolution", O_RDONLY);
 	resolution = get_next_line(fd);
@@ -44,6 +43,9 @@ void	get_resolution(t_fdf *fdf)
 	free(width_height[1]);
 	free(width_height);
 	free(resolution);
+	status = system("rm resolution");
+	if (status != 0)
+		error(4, NULL, fdf);
 }
 
 t_fdf	*fdf_init(void)
@@ -57,7 +59,7 @@ t_fdf	*fdf_init(void)
 	fdf->img = mlx_new_image(fdf->mlx, fdf->width, fdf->height);
 	fdf->line_len = 5;
 	fdf->addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel),
-					&(fdf->line_len), &(fdf->endian));
+			&(fdf->line_len), &(fdf->endian));
 	return (fdf);
 }
 
@@ -68,14 +70,15 @@ int	main(int argc, char **argv)
 	t_map	*map;
 
 	if (argc != 2)
-		error(1, NULL);
+		error(1, NULL, NULL);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error(2, NULL);
+		error(2, NULL, NULL);
 	fdf = fdf_init();
 	map = map_init();
 	read_map(map, fd);
 	isometric_view(fdf, map);
 	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->img, 0, 0);
+	set_controls(fdf, map);
 	mlx_loop(fdf->mlx);
 }

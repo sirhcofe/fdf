@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:30:37 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/03 23:15:08 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:34:18 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,18 @@ void	relative_to_zero(t_map *map)
 	map->trough = 0.0;
 }
 
-void	free_line(char **line)
+void	free_line(char **lineone, char *linetwo, char *linethree)
 {
 	int	i;
 
 	i = -1;
-	while (line[++i] != NULL)
-		free(line[i]);
-	free(line);
+	while (lineone[++i] != NULL)
+		free(lineone[i]);
+	free(lineone);
+	if (linetwo != NULL)
+		free(linetwo);
+	if (linethree != NULL)
+		free(linethree);
 }
 
 /**

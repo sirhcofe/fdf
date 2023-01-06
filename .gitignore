@@ -53,7 +53,10 @@ dkms.conf
 
 # Others
 .DS_Store
+.vscode/
 fdf
 maps
 test_maps
 resolution
+temp.c
+zzz.c
