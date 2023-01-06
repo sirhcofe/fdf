@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2023/01/06 14:32:50 by chenlee          ###   ########.fr        #
+#    Updated: 2023/01/06 17:51:21 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 SRC			=	error_msg.c				\
 				ft_free.c				\
 				get_next_line.c			\
+				long_atoi.c				\
 				read_map.c				\
 				read_map_utils.c		\
 				parsing.c				\
@@ -42,8 +43,7 @@ SRC			=	error_msg.c				\
 				drawaaline.c			\
 				drawaaline_utils.c		\
 				drawaaline_x_utils.c	\
-				drawaaline_y_utils.c	\
-				zzz.c
+				drawaaline_y_utils.c
 
 SRC_DIR		=	fildefer				\
 				fildefer/draw_line		\
@@ -67,7 +67,7 @@ $(OBJS_DIR)%.o:	%.c
 			gcc $(FLAGS) -I$(LIBX) $(INCLUDES) -c $< -o $@
 
 fdf:		main.c $(OBJS)
-			gcc $(FLAGS) main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
+			gcc $(FLAGS) -g3 main.c -L. -lfdf -Llibft -lft $(INCLUDES) $(COMPILE) -o fdf
 
 clean:
 			@rm -rf objects

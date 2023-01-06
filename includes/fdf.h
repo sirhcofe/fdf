@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:34:30 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:01:46 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,12 @@ void	set_controls(t_fdf *fdf, t_map *map);
 char	*get_next_line(int fd);
 char	*join_str(char *s1, char *s2);
 void	read_map(t_map *map, int fd);
-void	free_line(char **lineone, char *linetwo, char *linethree);
+void	free_line(char **lineone, char *linetwo);
 void	relative_to_zero(t_map *map);
 void	relative_to_mean(t_map *map);
-int		compare_columns(int column_count, int j);
 void	parse_file_to_struct(t_map *map, char **array, int column, int row);
+int		compare_columns(int column_count, int j);
+long	long_atoi(const char *str);
 
 // line drawing function
 void	draw(t_fdf *fdf, t_map *map);

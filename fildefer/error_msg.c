@@ -6,14 +6,12 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 22:04:44 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:32:59 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 16:49:27 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// 1 - 2 no free
-// 3 - 5 free map*
 void	error(int condition, t_map *map, t_fdf *fdf)
 {
 	if (condition >= 1 && condition <= 4)
@@ -29,8 +27,7 @@ void	error(int condition, t_map *map, t_fdf *fdf)
 		if (condition == 3)
 			ft_free(map, fdf, 1);
 		if (condition == 4)
-			ft_free(map, fdf, 3);
-		system("leaks fdf");
+			ft_free(map, fdf, 4);
 		exit(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:31:43 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:38:58 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error(2, NULL, NULL);
-	fdf = fdf_init();
 	map = map_init();
 	read_map(map, fd);
+	fdf = fdf_init();
 	isometric_view(fdf, map);
 	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->img, 0, 0);
 	set_controls(fdf, map);

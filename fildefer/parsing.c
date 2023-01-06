@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 11:19:49 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:33:53 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:01:18 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parse_file_to_struct(t_map *map, char **array, int column, int row)
 			map->map[i][j].z = (double)ft_atoi(line[j]);
 			map->map[i][j].w = 1.0;
 		}
-		free_line(line, NULL, NULL);
+		free_line(line, NULL);
 	}
 	map->row = row;
 	map->col = column;

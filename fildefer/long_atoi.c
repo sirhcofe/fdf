@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   long_atoi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 15:53:45 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 16:50:56 by chenlee          ###   ########.fr       */
+/*   Created: 2023/01/06 14:56:51 by chenlee           #+#    #+#             */
+/*   Updated: 2023/01/06 14:58:45 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_free(t_map *map, t_fdf *fdf, int situation)
+long	long_atoi(const char *str)
 {
-	int	i;
+	int		i;
+	long	nbr;
+	int		sign;
 
-	if (situation == 1 || situation == 2 || situation == 4)
+	i = 0;
+	nbr = 0;
+	sign = 1;
+	while (str[i] == 32 || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
+		i++;
+	if (str[i] == '-')
 	{
-		if (situation != 1)
-		{
-			i = -1;
-			while (++i < map->row)
-				free(map->map[i]);
-		}
-		free(map->map);
-		free(map);
+		sign = sign * -1;
+		i++;
 	}
-	if (situation == 3 || situation == 4)
-	{
-		fdf->img = NULL;
-		fdf->addr = NULL;
-		free(fdf);
-	}
+	else if (str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+		nbr = (nbr * 10) + (str[i++] - '0');
+	nbr = nbr * sign;
+	return (nbr);
 }

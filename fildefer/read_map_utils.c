@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:30:37 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:34:18 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:01:40 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	relative_to_zero(t_map *map)
 	map->trough = 0.0;
 }
 
-void	free_line(char **lineone, char *linetwo, char *linethree)
+#include <stdio.h>
+void	free_line(char **lineone, char *linetwo)
 {
 	int	i;
 
@@ -52,9 +53,10 @@ void	free_line(char **lineone, char *linetwo, char *linethree)
 		free(lineone[i]);
 	free(lineone);
 	if (linetwo != NULL)
+	{
+		printf("RUNS\n");
 		free(linetwo);
-	if (linethree != NULL)
-		free(linethree);
+	}
 }
 
 /**

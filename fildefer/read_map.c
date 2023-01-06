@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 19:10:03 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 14:33:41 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 18:01:26 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_number(char *number)
 	int	i;
 	int	neg;
 
-	if (ft_atoi(number) > MAX_INT || ft_atoi(number) < MIN_INT)
+	if (long_atoi(number) > MAX_INT && long_atoi(number) < MIN_INT)
 		return (1);
 	i = 0;
 	neg = 0;
@@ -112,11 +112,11 @@ int	check_array_size(t_map *map, char **array, int row_count)
 		{
 			if (check_number(line[j]) == 1)
 			{
-				free_line(line, NULL, NULL);
+				free_line(line, NULL);
 				return (1);
 			}
 		}
-		free_line(line, NULL, NULL);
+		free_line(line, NULL);
 		if (check_column(&column_count, j) == 1)
 			return (1);
 	}
@@ -152,10 +152,10 @@ void	read_map(t_map *map, int fd)
 			stored_line = join_str(stored_line, line);
 		line_count++;
 	}
-	map->map = ft_calloc(sizeof(int *), line_count);
+	map->map = malloc(sizeof(int *) * line_count);
 	array = ft_split(stored_line, '\n');
 	ret = check_array_size(map, array, line_count);
-	free_line(array, stored_line, line);
+	free_line(array, stored_line);
 	if (ret == 1)
 		error(3, map, NULL);
 	get_peak_trough(map);
