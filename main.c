@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 15:38:58 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:53:22 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	get_resolution(t_fdf *fdf)
 	char	*resolution;
 	char	**width_height;
 	int		fd;
-	int		status;
 
 	fd = open("resolution", O_RDONLY);
 	resolution = get_next_line(fd);
@@ -43,9 +42,7 @@ void	get_resolution(t_fdf *fdf)
 	free(width_height[1]);
 	free(width_height);
 	free(resolution);
-	status = system("rm resolution");
-	if (status != 0)
-		error(4, NULL, fdf);
+	system("rm resolution");
 }
 
 t_fdf	*fdf_init(void)

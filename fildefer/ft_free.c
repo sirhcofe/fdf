@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:53:45 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 16:50:56 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:38:07 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	ft_free(t_map *map, t_fdf *fdf, int situation)
 	}
 	if (situation == 3 || situation == 4)
 	{
+		mlx_destroy_window(fdf->mlx, fdf->mlx_win);
+		free(fdf->img);
+		free(fdf->addr);
 		fdf->img = NULL;
 		fdf->addr = NULL;
 		free(fdf);

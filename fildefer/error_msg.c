@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 22:04:44 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 16:49:27 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:09:22 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ void	error(int condition, t_map *map, t_fdf *fdf)
 			ft_putstr_fd("Error: Invalid map file!\n", 2);
 		else if (condition == 3)
 			ft_putstr_fd("Error: Invalid or inconsistent map input!\n", 2);
-		else if (condition == 4)
-			ft_putstr_fd("Error: System call failed to run!\n", 2);
 		if (condition == 3)
 			ft_free(map, fdf, 1);
-		if (condition == 4)
-			ft_free(map, fdf, 4);
 		exit(1);
 	}
 }

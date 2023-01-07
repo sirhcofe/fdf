@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2023/01/06 17:51:21 by chenlee          ###   ########.fr        #
+#    Updated: 2023/01/06 19:44:06 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRC			=	error_msg.c				\
 				drawaaline.c			\
 				drawaaline_utils.c		\
 				drawaaline_x_utils.c	\
-				drawaaline_y_utils.c
+				drawaaline_y_utils.c	\
+				print_coor.c			\
 
 SRC_DIR		=	fildefer				\
 				fildefer/draw_line		\

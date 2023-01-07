@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:30:37 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 18:01:40 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:01:30 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ char	*join_str(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (0);
 	else if (s1 && !s2)
-		return (ft_strdup(s1));
+		return (s1);
 	else if (!s1 && s2)
-		return (ft_strdup(s2));
+		return (s2);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	ptr = malloc(sizeof(char) * (s1_len + s2_len + 1));

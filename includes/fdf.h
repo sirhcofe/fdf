@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 18:01:46 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:55:28 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define BUFFER_SIZE 10
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
-# define ESC_KEY 53
+# define ESC_KEY 65307
+//65307 win 53 mac
 
 typedef struct	s_coor
 {
@@ -100,12 +101,6 @@ typedef struct	s_fdf
 	int			height;
 	t_wframe	wf;
 }				t_fdf;
-
-typedef struct	s_mem
-{
-	t_fdf *fdf;
-	t_map *map;
-}				t_mem;
 
 void	error(int condition, t_map *map, t_fdf *fdf);
 void    ft_free(t_map *map, t_fdf *fdf, int situation);
