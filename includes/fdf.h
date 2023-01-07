@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:11:51 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 19:55:28 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 18:57:50 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@
 # define BUFFER_SIZE 10
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
-# define ESC_KEY 65307
-//65307 win 53 mac
 
-typedef struct	s_coor
+typedef struct s_coor
 {
 	double	x;
 	double	y;
 	double	z;
 	double	w;
-}				t_coor;
+}			t_coor;
 
-typedef struct	s_screen
+typedef struct s_screen
 {
 	int		x0;
 	int		y0;
@@ -45,9 +43,9 @@ typedef struct	s_screen
 	double	gradient;
 	double	c_start;
 	double	c_range;
-}				t_screen;
+}			t_screen;
 
-typedef struct	s_xlwu
+typedef struct s_xlwu
 {
 	double	xend;
 	double	yend;
@@ -59,25 +57,25 @@ typedef struct	s_xlwu
 	int		ypxl1;
 	int		xpxl2;
 	int		ypxl2;
-}				t_xlwu;
+}			t_xlwu;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-}				t_color;
+}					t_color;
 
-typedef struct	s_wframe
+typedef struct s_wframe
 {
 	double	total_h;
 	double	total_w;
 	int		dot_dist;
 	double	dot_x;
 	double	dot_y;
-}				t_wframe;
+}			t_wframe;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	t_coor	**map;
 	int		row;
@@ -86,9 +84,9 @@ typedef struct	s_map
 	double	trough;
 	double	relative;
 	double	ratio;
-}				t_map;
+}			t_map;
 
-typedef struct	s_fdf
+typedef struct s_fdf
 {
 	void		*mlx;
 	void		*mlx_win;
@@ -102,9 +100,15 @@ typedef struct	s_fdf
 	t_wframe	wf;
 }				t_fdf;
 
+typedef struct s_mem
+{
+	t_fdf	*fdf;
+	t_map	*map;
+}			t_mem;
+
 void	error(int condition, t_map *map, t_fdf *fdf);
-void    ft_free(t_map *map, t_fdf *fdf, int situation);
-void	set_controls(t_fdf *fdf, t_map *map);
+void	ft_free(t_map *map, t_fdf *fdf, int situation);
+void	set_controls(t_mem *mem);
 
 // read map function
 char	*get_next_line(int fd);
@@ -114,6 +118,7 @@ void	free_line(char **lineone, char *linetwo);
 void	relative_to_zero(t_map *map);
 void	relative_to_mean(t_map *map);
 void	parse_file_to_struct(t_map *map, char **array, int column, int row);
+void	get_peak_trough(t_map *map);
 int		compare_columns(int column_count, int j);
 long	long_atoi(const char *str);
 

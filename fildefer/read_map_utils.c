@@ -6,12 +6,11 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:30:37 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 19:01:30 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 18:32:17 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	relative_to_mean(t_map *map)
 {
@@ -24,13 +23,18 @@ void	relative_to_mean(t_map *map)
 	{
 		coord[1] = -1;
 		while (++coord[1] < map->col)
-			total_z += map->map[coord[0]][coord[1]].z;
+			total_z += fabs(map->map[coord[0]][coord[1]].z);
 	}
 	total_z /= ((map->row * map->col) / 10);
-	if (total_z - map->peak < 0.0001)
+	if (total_z - map->peak < -0.001)
 	{
 		map->ratio = total_z / map->peak;
 		map->peak = total_z;
+	}
+	if (map->peak > 100)
+	{
+		map->ratio = 0.42;
+		map->peak *= 0.42;
 	}
 	else
 		map->ratio = 1.0;
@@ -43,7 +47,6 @@ void	relative_to_zero(t_map *map)
 	map->trough = 0.0;
 }
 
-#include <stdio.h>
 void	free_line(char **lineone, char *linetwo)
 {
 	int	i;
@@ -53,10 +56,7 @@ void	free_line(char **lineone, char *linetwo)
 		free(lineone[i]);
 	free(lineone);
 	if (linetwo != NULL)
-	{
-		printf("RUNS\n");
 		free(linetwo);
-	}
 }
 
 /**

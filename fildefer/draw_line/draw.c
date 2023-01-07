@@ -6,12 +6,11 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 19:47:21 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/04 22:45:51 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 17:54:12 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	assign_start_coor(t_screen *screen, t_map *map, int x, int y)
 {

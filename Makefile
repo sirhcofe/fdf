@@ -6,7 +6,7 @@
 #    By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 12:03:33 by chenlee           #+#    #+#              #
-#    Updated: 2023/01/06 19:44:06 by chenlee          ###   ########.fr        #
+#    Updated: 2023/01/07 19:06:35 by chenlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,16 @@ ifeq ($(UNAME), Linux)
 	LIBX = minilibx/minilibx_linux/
 	COMPILE = -L$(LIBX) -lmlx_Linux -L/usr/lib -I$(LIBX) -lXext -lX11 -lm -lz
 	PREBUILD = xdpyinfo | awk '/dimensions/ {print $$2}' > resolution
+	KEYCODE = echo 65307 > keycode
 endif
 ifeq ($(UNAME), Darwin)
 	LIBX = minilibx/minilibx_macos/
 	COMPILE = -L$(LIBX) -lmlx -framework OpenGL -framework AppKit
 	PREBUILD = system_profiler SPDisplaysDataType | awk '/Resolution/ {print $$2, $$3, $$4}' > resolution
+	KEYCODE = echo 53 > keycode
 endif
 
-$(shell $(PREBUILD))
+$(shell $(PREBUILD) && $(KEYCODE))
 
 NAME		=	libfdf.a
 FLAGS		=	-Wall -Wextra -Werror
@@ -43,8 +45,7 @@ SRC			=	error_msg.c				\
 				drawaaline.c			\
 				drawaaline_utils.c		\
 				drawaaline_x_utils.c	\
-				drawaaline_y_utils.c	\
-				print_coor.c			\
+				drawaaline_y_utils.c
 
 SRC_DIR		=	fildefer				\
 				fildefer/draw_line		\
@@ -57,7 +58,7 @@ INCLUDES	=	-Ilibft -Iincludes
 
 all:			$(NAME) fdf
 
-$(NAME):		$(OBJS)
+$(NAME):	$(OBJS)
 			@make -C $(LIBX) all
 			@make -C libft/ all
 			@ar rc $(NAME) $(OBJS)
@@ -72,6 +73,8 @@ fdf:		main.c $(OBJS)
 
 clean:
 			@rm -rf objects
+			@rm resolution
+			@rm keycode
 			@make -C $(LIBX) clean
 			@echo "Done!"
 
@@ -80,3 +83,4 @@ fclean:		clean
 			@echo "Done!"
 
 re:			fclean all
+			$(shell $(PREBUILD) && $(KEYCODE))

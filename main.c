@@ -6,7 +6,7 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 21:26:53 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 19:53:22 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 18:25:21 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,10 @@ void	get_resolution(t_fdf *fdf)
 	fd = open("resolution", O_RDONLY);
 	resolution = get_next_line(fd);
 	width_height = ft_split(resolution, 'x');
-	// fdf->width = ft_atoi(width_height[0]) * 0.9;
-	// fdf->height = ft_atoi(width_height[1]) * 0.9;
-	fdf->width = 1920;
-	fdf->height = 1080;
-	free(width_height[0]);
-	free(width_height[1]);
-	free(width_height);
+	fdf->width = ft_atoi(width_height[0]) * 0.45;
+	fdf->height = ft_atoi(width_height[1]) * 0.45;
+	free_line(width_height, NULL);
 	free(resolution);
-	system("rm resolution");
 }
 
 t_fdf	*fdf_init(void)
@@ -65,6 +60,7 @@ int	main(int argc, char **argv)
 	int		fd;
 	t_fdf	*fdf;
 	t_map	*map;
+	t_mem	mem;
 
 	if (argc != 2)
 		error(1, NULL, NULL);
@@ -76,6 +72,8 @@ int	main(int argc, char **argv)
 	fdf = fdf_init();
 	isometric_view(fdf, map);
 	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->img, 0, 0);
-	set_controls(fdf, map);
+	mem.fdf = fdf;
+	mem.map = map;
+	set_controls(&mem);
 	mlx_loop(fdf->mlx);
 }

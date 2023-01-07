@@ -6,12 +6,11 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:39:47 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/06 10:18:54 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 17:54:21 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	put_pxl(t_fdf *fdf, int x, int y, int color)
 {

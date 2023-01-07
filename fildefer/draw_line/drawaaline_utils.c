@@ -6,12 +6,11 @@
 /*   By: chenlee <chenlee@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:45:06 by chenlee           #+#    #+#             */
-/*   Updated: 2023/01/05 14:36:49 by chenlee          ###   ########.fr       */
+/*   Updated: 2023/01/07 17:54:13 by chenlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	swap(int *a, int *b)
 {
