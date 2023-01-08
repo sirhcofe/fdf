@@ -31,7 +31,7 @@ void	relative_to_mean(t_map *map)
 		map->ratio = total_z / map->peak;
 		map->peak = total_z;
 	}
-	if (map->peak > 100)
+	else if (map->peak > 100)
 	{
 		map->ratio = 0.42;
 		map->peak *= 0.42;
