@@ -33,6 +33,6 @@ correspond to the abscissa and ordinate, and the values correspond to its altitu
   >
 </p>
 
-A wireframe is initially assumed to be a cuboid (see white outline), in which its length and width of the cuboid equate to the row and rows and columns
+A wireframe is initially assumed to be a cuboid (see white outline), in which its length and width of the cuboid equate to the rows and columns
 defined in the map_file, and the height can be defined by the altitude. By calculating the apparent height and width of the cuboid when projected to
 2D space, specific value for the pixel distance between points can be obtained while attempting to fit the model as much onto the screen as possible.
